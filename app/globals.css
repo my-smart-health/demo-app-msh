@@ -1,0 +1,240 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+@import 'swiper/css/bundle';
+
+:root {
+  --primary: #2db9bc;
+  --secondary: #c5ffe4;
+  padding: 0;
+  margin: 0;
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-base-100: #ffffff;
+  --color-base-200: #f8f9fa;
+  --color-base-300: #e9ecef;
+  --color-base-content: #212529;
+  --tab-border-colors: var(--primary);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'IBM Plex Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply bg-white text-black;
+  overflow-x: hidden;
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(1);
+}
+
+.tab {
+  background-color: var(--color-base-100);
+  border-color: var(--primary);
+  color: var(--color-base-content);
+}
+input.tab:checked,
+.tab-active {
+  background-color: var(--primary);
+  color: white;
+  border-color: gray;
+  scale: 1.05;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+span.swiper-pagination-bullet-active {
+  background-color: black;
+}
+
+span.swiper-pagination-bullet,
+span.swiper-pagination-bullet-active {
+  width: 12px;
+  height: 12px;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: white;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: rotate(15deg);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: rotate(-15deg);
+  }
+}
+
+.spin-slow {
+  animation: spin 10s linear infinite;
+}
+
+.tiptap-editor .ProseMirror,
+.bio-content .ProseMirror {
+  outline: none;
+}
+
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiptap-editor .ProseMirror,
+.bio-content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.bio-content .ProseMirror {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol,
+.bio-content ul,
+.bio-content ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.tiptap-editor .ProseMirror ul li,
+.bio-content ul li {
+  list-style-type: disc;
+}
+
+.tiptap-editor .ProseMirror ol li,
+.bio-content ol li {
+  list-style-type: decimal;
+}
+
+.tiptap-editor .ProseMirror h1,
+.bio-content h1 {
+  font-size: 1.75em;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+
+.tiptap-editor .ProseMirror h2,
+.bio-content h2 {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.tiptap-editor .ProseMirror h3,
+.bio-content h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.tiptap-editor .ProseMirror p,
+.bio-content p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.tiptap-editor .ProseMirror strong,
+.bio-content strong {
+  font-weight: bold;
+}
+
+.tiptap-editor .ProseMirror em,
+.bio-content em {
+  font-style: italic;
+}
+
+.tiptap-editor .ProseMirror u,
+.bio-content u {
+  text-decoration: underline;
+}
+
+.tiptap-editor .ProseMirror s,
+.bio-content s {
+  text-decoration: line-through;
+}
+
+.tiptap-editor .ProseMirror blockquote,
+.bio-content blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+  color: #6c757d;
+}
+
+.tiptap-editor .ProseMirror br,
+.bio-content br {
+  display: block;
+  content: '';
+  margin-top: 0.5em;
+}
+
+.bio-content a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.bio-content a:hover {
+  opacity: 0.8;
+}
+
+.bio-content [style*='text-align: center'] {
+  text-align: center;
+}
+
+.bio-content [style*='text-align: right'] {
+  text-align: right;
+}
+
+.bio-content [style*='text-align: left'] {
+  text-align: left;
+}
+
+.multi-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

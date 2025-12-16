@@ -1,0 +1,112 @@
+'use client'
+
+import Image from "next/image";
+import { Suspense, useState } from "react";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Mousewheel, Navigation, Pagination, Scrollbar } from "swiper/modules";
+
+import YoutubeEmbed from "@/components/embed/youtube/YoutubeEmbed";
+import InstagramEmbed from "@/components/embed/instagram/InstagramEmbed";
+import { PAGINATION_BULLET_QUANTITY } from "@/utils/constants";
+
+export default function FadeCarousel({ photos }: { photos: string[] }) {
+  const [zoomedIdx, setZoomedIdx] = useState<number | null>(null);
+
+  return (
+    <Suspense fallback={<div className="text-center skeleton min-h-[352px]">Loading...</div>}>
+      <div className="w-full flex flex-col items-center">
+        <div className="w-full max-w-[450px] md:max-w-[600px] aspect-video">
+          <Swiper
+            key={photos.join(',')}
+            modules={[Scrollbar, Mousewheel, Navigation, Pagination, Autoplay]}
+            spaceBetween={10}
+            lazyPreloadPrevNext={1}
+            slidesPerView={1}
+            effect="slide"
+            grabCursor={true}
+            navigation={true}
+            pagination={{ clickable: true, enabled: true, dynamicBullets: true, dynamicMainBullets: PAGINATION_BULLET_QUANTITY }}
+            mousewheel={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: true,
+              pauseOnMouseEnter: true,
+              waitForTransition: true,
+            }}
+            speed={1500}
+            className="w-full h-full"
+          >
+            {photos?.map((item, idx) => {
+              const isYoutube = /youtu(be)?/.test(item);
+              const isInstagram = /instagram/.test(item);
+
+              let content;
+              if (isYoutube) {
+                content = <YoutubeEmbed embedHtml={item} width="100%" height="100%" />;
+              } else if (isInstagram) {
+                content = <InstagramEmbed embedHtml={item} width="100%" height="100%" />;
+              } else {
+                content = (
+                  <div
+                    className="relative w-full h-full rounded-lg cursor-zoom-in"
+                    onClick={() => setZoomedIdx(idx)}
+                  >
+                    <Image
+                      placeholder="empty"
+                      src={item}
+                      alt={item}
+                      fill
+                      sizes="(max-width: 600px) 100vw, 600px"
+                      style={{ objectFit: "contain" }}
+                      className="rounded-lg"
+                    />
+                  </div>
+                );
+              }
+
+              return (
+                <SwiperSlide key={item + idx} className={`${photos.length > 1 ? 'pb-10 md:pb-13' : ''} text-white`}>
+                  <div className="w-full h-full flex justify-center items-center aspect-video">
+                    {content}
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </div>
+      </div>
+
+      {zoomedIdx !== null && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 z-50 flex items-center justify-center transition-opacity cursor-zoom-out"
+          onClick={() => setZoomedIdx(null)}
+        >
+          <div
+            className="relative max-w-3xl w-full cursor-zoom-out"
+            onClick={e => { e.stopPropagation(); setZoomedIdx(null); }}
+          >
+            <button
+              className="absolute top-4 right-4 btn btn-circle place-content-around text-3xl font-bold z-10 cursor-pointer"
+              onClick={() => setZoomedIdx(null)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <div className="relative w-full h-[60vh] md:h-[80vh]">
+              <Image
+                src={photos[zoomedIdx!]}
+                alt={`Zoomed photo ${zoomedIdx! + 1}`}
+                placeholder="empty"
+                fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                style={{ objectFit: "contain" }}
+                className="rounded-lg shadow-lg bg-black/50"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </Suspense>
+  );
+}

@@ -1,0 +1,145 @@
+// Define database connection via the `DATABASE_URL` env var
+datasource db {
+  provider = "postgresql"
+  url      = env("PRISMA_DATABASE_URL")
+}
+
+// Define custom output path for generated Prisma Client
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum CategoryType {
+  SMART_HEALTH
+  MEDIZIN_UND_PFLEGE
+  NOTFALLE
+  THE_LEADING_DOCTORS
+  THE_HEALTH_BAR
+}
+
+model User {
+  id               String         @id @default(uuid())
+  email            String         @unique
+  password         String         @db.VarChar(255)
+  role             Role           @default(USER)
+  createdAt        DateTime       @default(now())
+  emailVerified    DateTime?      @default(now())
+  name             String?
+  displayEmail     String?
+  website          String?
+  bio              String?        @db.Text
+  schedule         Json?
+  phones           String[]
+  profileImages    String[]
+  profileFiles     String[]
+  fieldOfExpertise Json?
+  reservationLinks Json?
+  membership       Json?
+  ratingStars      Int?
+  ratingLink       String?
+  socials          String[]
+  posts            Posts[]        @relation("UserPosts")
+  locations        Location[]     @relation("UserLocations")
+  certificates     Certificate[]  @relation("UserCertificates")
+  categoryUsers    CategoryUser[]
+}
+
+model Posts {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  title       String    @db.VarChar(255)
+  content     String    @db.Text
+  author      User      @relation("UserPosts", fields: [authorId], references: [id])
+  authorId    String
+  photos      String[]
+  tags        String[]
+  socialLinks Json?
+  Cube        Cube?     @relation(fields: [cubeId], references: [id])
+  cubeId      String?
+  cubeOrder   Int?
+
+  @@index([cubeId, cubeOrder])
+}
+
+model Certificate {
+  id            String    @id @default(uuid())
+  name          String
+  issuer        String
+  images        String[]
+  issueDate     DateTime
+  expiryDate    DateTime?
+  credentialId  String?
+  credentialUrl String?
+  user          User      @relation("UserCertificates", fields: [userId], references: [id])
+  userId        String
+}
+
+model MySmartHealth {
+  id           String                  @id @default(uuid())
+  generalTitle String?
+  paragraph    Json
+  locations    MySmartHealthLocation[]
+}
+
+model MySmartHealthLocation {
+  id              String         @id @default(uuid())
+  address         String
+  phone           String[]
+  schedule        Json?
+  MySmartHealth   MySmartHealth? @relation(fields: [mySmartHealthId], references: [id])
+  mySmartHealthId String?
+}
+
+model Location {
+  id               String   @id @default(uuid())
+  address          String
+  phone            String[]
+  schedule         Json?
+  reservationLinks Json?
+  user             User     @relation("UserLocations", fields: [userId], references: [id])
+  userId           String
+}
+
+model Category {
+  id            String         @id @default(uuid())
+  name          String
+  parent        Category?      @relation("CategoryChildren", fields: [parentId], references: [id])
+  parentId      String?
+  children      Category[]     @relation("CategoryChildren")
+  categoryUsers CategoryUser[]
+  type          CategoryType
+}
+
+model CategoryUser {
+  id         String   @id @default(uuid())
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  addedAt    DateTime @default(now())
+
+  @@unique([categoryId, userId])
+  @@index([categoryId])
+  @@index([userId])
+}
+
+model Cube {
+  id       String  @id @default(uuid())
+  onOff    Boolean @default(true)
+  postList Posts[]
+}
+
+model AdminNotification {
+  id          String    @id @default(uuid())
+  message     String
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  resetReadAt DateTime?
+  archivedAt  DateTime?
+}

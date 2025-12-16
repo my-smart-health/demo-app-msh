@@ -1,0 +1,56 @@
+'use client'
+import { AtSign, Globe, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
+
+export default function TheHealthBarInfo() {
+  const currentTime = new Date();
+  const day = currentTime.getDay();
+  const hour = currentTime.getHours();
+  let isOpen = false;
+
+  if (day >= 1 && day <= 5) {
+    isOpen = hour >= 10 && hour < 20;
+  } else if (day === 6) {
+    isOpen = hour >= 10 && hour < 16;
+  }
+
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-3 text-wrap text-start ">
+        <p className="flex">
+          <Phone /> <span className="pl-2">+ 49 123 456 7890</span>
+        </p>
+        <p className="flex">
+          <AtSign /> <Link href="mailto:info@shop.de" className="pl-2 visited:text-purple-500 not-visited:text-primary">info@shop.de</Link>
+        </p>
+        <p className="flex">
+          <Globe /> <Link href="https://www.healthbar.de" className="pl-2 visited:text-purple-500 not-visited:text-primary">www.healthbar.de</Link>
+        </p>
+        <p className="flex">
+          <MapPin />
+          <span className="pl-2">Musterstraße 125, 12345 Musterstadt</span>
+        </p>
+      </div>
+      <div className="grid sm:col-span-2 mt-4 gap-1">
+        <div className="flex justify-start">
+          <p className="flex justify-start mb-2">
+            Öffnungszeiten:
+          </p>
+          <p className="pl-4">
+            {isOpen ? <span className="text-green-500/95">geöffnet</span> : <span className="text-red-500/95">geschlossen</span>}
+          </p>
+        </div>
+        <div className="flex flex-col gap-2 justify-evenly">
+          <div className="flex flex-row ">
+            <p className="text-start">Montag - Freitag:</p>
+            <p className="pl-2">10:00 - 20:00 Uhr</p>
+          </div>
+          <div className="flex flex-row ">
+            <p className="text-start">Samstag:</p>
+            <p className="pl-18">10:00 - 16:00 Uhr</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

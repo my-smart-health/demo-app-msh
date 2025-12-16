@@ -1,0 +1,12 @@
+export { default as ProfilePictureSection } from './ProfilePictureSection';
+export { default as FieldOfExpertiseSection } from './FieldOfExpertiseSection';
+export { default as BioSection } from './BioSection';
+export { default as NewsSection } from './NewsSection';
+export { default as ContactSection } from './ContactSection';
+export { default as ScheduleSection } from './ScheduleSection';
+export { default as CertificatesSection } from './CertificatesSection';
+export { default as PrescriptionReservation } from './PrescriptionReservation';
+export { default as PhoneNumbers } from './PhoneNumbers';
+export { default as SocialLinks } from './SocialLinks';
+export { default as UploadedFilesSection } from './UploadedFilesSection';
+export { default as MembershipSection } from './MembershipSection';
