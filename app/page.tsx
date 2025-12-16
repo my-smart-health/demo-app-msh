@@ -112,7 +112,7 @@ export default async function Home() {
       <div className="flex flex-col mt-3 gap-3 w-full mx-auto max-w-[100%]">
         <MySmartHealth />
         <ProfileSearchToggle />
-        <NewsSmartHealthMedizinButton name={CATEGORY_NAMES.theLeadingDoctors.name} icon="/icon2.png" goTo='/' imageAsTitle="/the-leading-doctors.png" imageAsTitleSecond="/the-leading-hospitals.png" />
+        <NewsSmartHealthMedizinButton name={CATEGORY_NAMES.theLeadingDoctors.name} icon="/icon2.png" goTo='/the-leading-doctors' imageAsTitle="/the-leading-doctors.png" imageAsTitleSecond="/the-leading-hospitals.png" />
         <NewsSmartHealthMedizinButton name={CATEGORY_NAMES.smartHealth.name} icon="/icon3.png" goTo={CATEGORY_NAMES.smartHealth.link} />
         <NewsSmartHealthMedizinButton name={CATEGORY_NAMES.medizinUndPflege.name} icon="/icon4.png" goTo={CATEGORY_NAMES.medizinUndPflege.link} />
         <NewsSmartHealthMedizinButton name={CATEGORY_NAMES.notfalle.name} icon={<CirclePlus size={34} color="red" />} goTo={CATEGORY_NAMES.notfalle.link} />
