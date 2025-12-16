@@ -31,15 +31,6 @@ export default function NewsSmartHealthMedizinButton({ name, icon, goTo, active,
               />
             </>
           )}
-          <div className={`w-full mx-auto border h-0 max-w-[90%]`}></div>
-          <Image
-            src="/termine-kurzfristig-neutral.png"
-            alt="Termine Kurzfristig Icon"
-            width={120}
-            height={65}
-            style={{ width: "auto", height: "auto" }}
-            className="inline-block my-4"
-          />
         </div>
       ) : (
         <>
