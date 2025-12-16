@@ -851,5 +851,6 @@
     "Zwecke",
     "Zwecks"
   ],
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "prisma.pinToPrisma6": true
 }
