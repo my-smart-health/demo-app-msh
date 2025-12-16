@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-type NewsSmartHealthMedizinButtonProps = {
+type CategoryButtonProps = {
   name: string;
   icon?: string | React.ReactNode;
   goTo: string;
@@ -11,7 +11,7 @@ type NewsSmartHealthMedizinButtonProps = {
   imageAsTitleSecond?: string;
 };
 
-export default function NewsSmartHealthMedizinButton({ name, icon, goTo, active, imageAsTitle, imageAsTitleSecond }: NewsSmartHealthMedizinButtonProps) {
+export default function CategoryButton({ name, icon, goTo, active, imageAsTitle, imageAsTitleSecond }: CategoryButtonProps) {
 
   return (
     <Link href={goTo} className={`flex flex-row ${imageAsTitle ? "" : "h-15"} w-full max-w-[100%] rounded-2xl border shadow-xl`}>
